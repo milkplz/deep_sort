@@ -133,6 +133,9 @@ def generate_detections(encoder, mot_dir, output_dir, detection_dir=None):
         MOTChallenge structure: `[sequence]/det/det.txt`. If None, uses the
         standard MOTChallenge detections.
 
+        det.txt - File Format : <frame>, <id>, <bb_left>, <bb_top>, <bb_width>, <bb_height>, <conf>, <x>, <y>, <z>
+        The conf value contains the detection confidence in the det.txt files. 
+
     """
     if detection_dir is None:
         detection_dir = mot_dir
@@ -144,7 +147,7 @@ def generate_detections(encoder, mot_dir, output_dir, detection_dir=None):
         else:
             raise ValueError(
                 "Failed to created output directory '%s'" % output_dir)
-
+    
     for sequence in os.listdir(mot_dir):
         print("Processing %s" % sequence)
         sequence_dir = os.path.join(mot_dir, sequence)

@@ -128,7 +128,7 @@ def create_detections(detection_mat, frame_idx, min_height=0):
 
 def run(sequence_dir, detection_file, output_file, min_confidence,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, display):
+        nn_budget, display, output_image_dir):
     """Run multi-target tracker on a particular sequence.
 
     Parameters
@@ -155,6 +155,8 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
         is enforced.
     display : bool
         If True, show visualization of intermediate tracking results.
+    output_image_dir : str
+        Path to the tracking output image file directory
 
     """
     seq_info = gather_sequence_info(sequence_dir, detection_file)
@@ -162,6 +164,8 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
         "cosine", max_cosine_distance, nn_budget)
     tracker = Tracker(metric)
     results = []
+    if not output_image_dir is None:
+        os.makedirs(output_image_dir, exist_ok=True)
 
     def frame_callback(vis, frame_idx):
         print("Processing frame %05d" % frame_idx)
@@ -189,6 +193,7 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
             vis.set_image(image.copy())
             vis.draw_detections(detections)
             vis.draw_trackers(tracker.tracks)
+            vis.save_image(output_image_dir+str(frame_idx)+".jpg")
 
         # Store results.
         for track in tracker.tracks:
@@ -246,6 +251,9 @@ def parse_args():
     parser.add_argument(
         "--display", help="Show intermediate tracking results",
         default=True, type=bool)
+    parser.add_argument(
+        "--output_image_dir", help="Path to tracking output image directory",
+        default=None, required=True)
     return parser.parse_args()
 
 
@@ -254,4 +262,4 @@ if __name__ == "__main__":
     run(
         args.sequence_dir, args.detection_file, args.output_file,
         args.min_confidence, args.nms_max_overlap, args.min_detection_height,
-        args.max_cosine_distance, args.nn_budget, args.display)
+        args.max_cosine_distance, args.nn_budget, args.display, args.output_image_dir)

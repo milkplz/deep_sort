@@ -2,7 +2,7 @@
 import numpy as np
 import colorsys
 from .image_viewer import ImageViewer
-
+import imageio
 
 def create_unique_color_float(tag, hue_step=0.41):
     """Create a unique RGB color code for a given track id (tag).
@@ -80,6 +80,9 @@ class NoVisualization(object):
             frame_callback(self, self.frame_idx)
             self.frame_idx += 1
 
+    def save_image(self, path):
+        pass
+
 
 class Visualization(object):
     """
@@ -132,3 +135,5 @@ class Visualization(object):
             # self.viewer.gaussian(track.mean[:2], track.covariance[:2, :2],
             #                      label="%d" % track.track_id)
 #
+    def save_image(self, path):
+        imageio.imwrite(path, self.viewer.image)
