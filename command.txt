@@ -26,14 +26,14 @@ python deep_sort_app.py \
 
 python tools/generate_detections.py \
     --model=/Users/luke/Documents/ml_datasets/original/deep_sort_data/resources/networks/mars-small128.pb \
-    --mot_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test \
-    --output_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/detections \
-    --detection_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test
+    --mot_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038 \
+    --output_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038 \
+    --detection_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038
 
 
 python deep_sort_app.py \
     --sequence_dir=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038 \
-    --detection_file=/Users/luke/Documents/ml_datasets/new/deep_sort/detections/37038.npy \
+    --detection_file=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038/37038.npy \
     --output_file=/Users/luke/Documents/ml_datasets/new/deep_sort/test/37038/tracking/tracking.txt \
     --min_confidence=0.3 \
     --nn_budget=100 \
